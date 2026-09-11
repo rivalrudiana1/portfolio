@@ -27,7 +27,7 @@ const Hero = () => {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="/pdf/cv-rival-rudiana.pdf"
+            href="/cv-rival-rudiana.pdf"
             target="_blank"
             rel="noopener noreferrer"
             download
