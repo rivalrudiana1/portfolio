@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-ulbi-grey text-ulbi-blue antialiased selection:bg-ulbi-orange selection:text-white;
+  }
+  html { scroll-behavior: smooth; }
+}
