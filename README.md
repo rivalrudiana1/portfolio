@@ -1,16 +1,45 @@
-# React + Vite
+# Rival Rudiana Putra — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio Full-Stack Developer & Data Architecture Specialist. React 19 + Vite 8 + Tailwind CSS v4.
 
-Currently, two official plugins are available:
+## Jalankan lokal
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Script
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `npm run dev` — development server
+- `npm run build` — production build ke `dist/`
+- `npm run lint` — ESLint
+- `npm run preview` — preview hasil build
 
-## Expanding the ESLint configuration
+## Struktur
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `src/data/portfolioData.js` — single source of truth (profil, metrics, projects + `repoLinks`, experience, organization, education, certifications, languages, skills, contact, siteUrl)
+- `src/components/sections/` — Hero, MetricsBanner, Skills, Projects (search + filter tech), Experience, Education, Certifications, Contact
+- `src/components/ui/` — ProjectCard, ProjectModal, Badge, Reveal, BackToTop
+- `src/components/layout/` — Navbar, Footer
+- `src/hooks/useInView.js` — reveal-on-scroll + trigger count-up
+- `public/cv-rival-rudiana.pdf` — file CV untuk tombol Unduh CV
+
+## Ganti foto & screenshot
+
+- Foto profil: simpan sebagai `public/images/profile.jpg` (persegi, min 512px),
+  lalu ubah `photo` di `src/data/portfolioData.js` menjadi `/images/profile.jpg`.
+- Screenshot project: simpan di `public/images/projects/<nama>.jpg/png`,
+  lalu ubah field `image` tiap project di `portfolioData.js`.
+  File SVG saat ini (`profile.svg`, `projects/*.svg`) adalah placeholder siap ganti.
+
+## Contact form
+
+Tanpa konfigurasi, form memakai fallback `mailto:` (membuka aplikasi email).
+Untuk pengiriman langsung:
+
+```bash
+cp .env.example .env
+# isi VITE_FORMSPREE_FORM_ID dengan ID dari https://formspree.io
+npm run dev
+```

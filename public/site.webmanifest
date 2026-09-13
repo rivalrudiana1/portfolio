@@ -1,0 +1,17 @@
+{
+  "name": "Rival Rudiana Putra — Portfolio",
+  "short_name": "Rival.",
+  "description": "Full-Stack Developer & Data Architecture Specialist",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EFEFEF",
+  "theme_color": "#00277F",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

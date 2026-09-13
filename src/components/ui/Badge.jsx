@@ -8,9 +8,9 @@ const Badge = ({ children, variant = 'default' }) => {
   };
 
   return (
-    <div className={`${baseClasses} ${variants[variant]}`}>
+    <span className={`${baseClasses} ${variants[variant]}`}>
       {children}
-    </div>
+    </span>
   );
 };
 

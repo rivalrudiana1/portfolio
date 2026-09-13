@@ -1,27 +1,9 @@
 import Badge from '../ui/Badge';
-
-const skillsData = [
-  {
-    category: "Languages & Core",
-    skills: ["PHP 8.2", "JavaScript", "HTML5/CSS3", "TypeScript"]
-  },
-  {
-    category: "Frameworks & Libs",
-    skills: ["Laravel 11", "React.js", "Vite", "Tailwind CSS", "Express.js"]
-  },
-  {
-    category: "Databases",
-    skills: ["MySQL", "PostgreSQL"]
-  },
-  {
-    category: "Architecture & Logic",
-    skills: ["Fuzzy Matching", "Time-Overlap Query", "Predictive Algorithms (WMA/ROP)", "Data Normalization", "RESTful APIs"]
-  }
-];
+import { skillsData } from '../../data/portfolioData';
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-24 bg-white border-y border-ulbi-silver/50">
+    <section id="skills" className="py-24 bg-white border-y border-ulbi-silver/50 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
         <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-ulbi-blue mb-4 tracking-tight">Core Expertise & Tech Stack</h2>
@@ -34,7 +16,7 @@ const Skills = () => {
           {skillsData.map((group, index) => (
             <div key={index} className="bg-ulbi-grey/30 p-6 rounded-2xl border border-ulbi-silver hover:border-ulbi-orange transition-colors shadow-sm">
               <h3 className="text-xl font-semibold text-ulbi-blue mb-6 flex items-center gap-2">
-                <span className="w-8 h-px bg-ulbi-orange/50"></span>
+                <span className="w-8 h-px bg-ulbi-orange/50" aria-hidden="true"></span>
                 {group.category}
               </h3>
               <div className="flex flex-wrap gap-2">

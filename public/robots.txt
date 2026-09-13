@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-eight-brown-x3erim3vum.vercel.app/sitemap.xml
