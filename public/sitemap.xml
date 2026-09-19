@@ -5,4 +5,54 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/audit-sinkronisasi-pemakaman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/warehouse-management-system</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/campus-facility-booking</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/e-voting-pemira-ulbi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/iot-hydroponic-dashboard</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/cukimai-ai-konsultasi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/sipadu-information-system</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/tasty-food-resto</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/tidur-in-sleep-recommender</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio-eight-brown-x3erim3vum.vercel.app/projects/flutter-form-uts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

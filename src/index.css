@@ -1,31 +1,78 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
-    @apply bg-ulbi-grey text-ulbi-blue antialiased selection:bg-ulbi-orange selection:text-white;
+    @apply bg-ulbi-grey text-ulbi-blue antialiased selection:bg-ulbi-orange selection:text-white dark:bg-zinc-950 dark:text-zinc-100;
   }
   html { scroll-behavior: smooth; }
+  .dark { color-scheme: dark; }
+  img { @apply select-none; }
 }
 
-/* Reveal on scroll */
+/* ---- Signature keyframes (ala Portofolio_V5, adaptasi ULBI) ---- */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes glow-pan {
+  0%, 100% { transform: translateX(-30%) scale(1); }
+  50% { transform: translateX(30%) scale(1.15); }
+}
+
+@keyframes shine-sweep {
+  from { transform: translateX(-120%) skewX(-18deg); }
+  to { transform: translateX(240%) skewX(-18deg); }
+}
+
 @layer utilities {
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-    will-change: opacity, transform;
+  .animate-float { animation: float-y 5s ease-in-out infinite; }
+  .animate-marquee { animation: marquee-x 32s linear infinite; }
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   }
-  .reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .marquee-paused:hover .animate-marquee { animation-play-state: paused; }
+  .caret-blink { animation: caret-blink 1s step-end infinite; }
+  .animate-glow-pan { animation: glow-pan 9s ease-in-out infinite; }
+
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+    pointer-events: none;
   }
+  .btn-shine:hover::after { animation: shine-sweep 0.9s ease; }
+
+  .preserve-3d { transform-style: preserve-3d; }
+  .perspective-1000 { perspective: 1000px; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
     html { scroll-behavior: auto; }
+    .animate-float,
+    .animate-marquee,
+    .animate-glow-pan,
+    .caret-blink { animation: none; }
+    .btn-shine:hover::after { animation: none; }
   }
 }

@@ -13,6 +13,7 @@ export const personalInfo = {
   ],
   projects: [
     {
+      slug: "audit-sinkronisasi-pemakaman",
       title: "Sistem Audit & Sinkronisasi Data Pemakaman",
       tech: ["Laravel", "React", "MySQL"],
       image: "/images/projects/audit-pemakaman.svg",
@@ -29,6 +30,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "warehouse-management-system",
       title: "Warehouse Management System (WMS)",
       tech: ["Laravel", "React", "Recharts", "WMA", "ROP"],
       image: "/images/projects/wms.svg",
@@ -48,6 +50,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "campus-facility-booking",
       title: "Campus Facility Booking System",
       tech: ["Laravel 11", "PHP 8.2", "MySQL", "RBAC"],
       image: "/images/projects/facility-booking.svg",
@@ -64,6 +67,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "e-voting-pemira-ulbi",
       title: "E-Voting PEMIRA ULBI",
       tech: ["Laravel", "Tailwind CSS", "Alpine.js"],
       image: "/images/projects/evoting.svg",
@@ -80,6 +84,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "iot-hydroponic-dashboard",
       title: "IoT Hydroponic Monitoring Dashboard",
       tech: ["ESP32", "React", "Express", "REST API"],
       image: "/images/projects/iot-hydroponic.svg",
@@ -96,6 +101,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "cukimai-ai-konsultasi",
       title: "CUKIMAI — Konsultasi Mahasiswa dengan AI",
       tech: ["Python", "Streamlit", "scikit-learn", "Groq"],
       image: "/images/projects/cukimai.svg",
@@ -112,6 +118,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "sipadu-information-system",
       title: "SIPADU — Full-Stack Information System",
       tech: ["Express", "Prisma", "React", "Tailwind CSS"],
       image: "/images/projects/sipadu.svg",
@@ -131,6 +138,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "tasty-food-resto",
       title: "TASTY_FOOD — Company Profile Resto",
       tech: ["Laravel 10", "PHP 8.1", "MySQL", "Blade"],
       image: "/images/projects/tasty-food.svg",
@@ -147,6 +155,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "tidur-in-sleep-recommender",
       title: "Tidur.in — Rekomendasi Jam Tidur",
       tech: ["Python", "Streamlit", "scikit-learn"],
       image: "/images/projects/tidur.svg",
@@ -163,6 +172,7 @@ export const personalInfo = {
       liveUrl: null,
     },
     {
+      slug: "flutter-form-uts",
       title: "Aplikasi Form Flutter (UTS Mobile Programming)",
       tech: ["Flutter", "Dart"],
       image: "/images/projects/flutter-uts.svg",
@@ -247,19 +257,66 @@ export const personalInfo = {
   },
   certifications: [
     {
-      title: "Teknisi Jaringan Muda",
-      issuer: "BNSP / Lembaga Sertifikasi",
-      year: "2026",
-    },
-    {
-      title: "SAP Certification",
-      issuer: "SAP",
+      title: "Kuliah Umum — Large Language Models (LLMs) dan Algoritma Mutakhir",
+      issuer: "ULBI / HIMATIF-23",
       year: "2025",
+      file: "/certificates/kuliah-umum-llm-2025.png",
+      type: "image",
     },
     {
-      title: "Praktik Kerja Lapangan (PKL)",
-      issuer: "GraPari Telkom Group",
-      year: "2022",
+      title: "PEMIRA ULBI 2025 — Anggota Divisi Logistik",
+      issuer: "PEMIRA ULBI",
+      year: "2025",
+      file: "/certificates/pemira-2025.jpeg",
+      type: "image",
+    },
+    {
+      title: "Kepengurusan MPM ULBI 2024/2025 — Anggota Komisi 3 (Aspirasi)",
+      issuer: "Majelis Permusyawaratan Mahasiswa ULBI",
+      year: "2025",
+      file: "/certificates/kepengurusan-mpm-2024-2025.pdf",
+      thumb: "/certificates/thumbs/kepengurusan-mpm-2024-2025.jpg",
+      type: "pdf",
+    },
+    {
+      title: "Magang — Dinas Ciptabintar Kota Bandung",
+      issuer: "Dinas Ciptabintar Kota Bandung",
+      year: "2026",
+      file: "/certificates/magang-ciptabintar.pdf",
+      thumb: "/certificates/thumbs/magang-ciptabintar.jpg",
+      type: "pdf",
+    },
+    {
+      title: "Pelantikan Akbar Ormawa ULBI — Panitia (22 Mei 2024)",
+      issuer: "MPM ULBI",
+      year: "2024",
+      file: "/certificates/pelantikan-akbar-2024-2025.pdf",
+      thumb: "/certificates/thumbs/pelantikan-akbar-2024-2025.jpg",
+      type: "pdf",
+    },
+    {
+      title: "PKKMB ULBI 2024 — Peserta",
+      issuer: "Universitas Logistik dan Bisnis Internasional",
+      year: "2024",
+      file: "/certificates/pkkmb.pdf",
+      thumb: "/certificates/thumbs/pkkmb.jpg",
+      type: "pdf",
+    },
+    {
+      title: "TOEIC Prediction Test — Skor 580",
+      issuer: "Pusat Bahasa ULBI",
+      year: "2026",
+      file: "/certificates/toeic.pdf",
+      thumb: "/certificates/thumbs/toeic.jpg",
+      type: "pdf",
+    },
+    {
+      title: "ACAD CSIRT Summit 2025 — Participant",
+      issuer: "ACAD CSIRT × BSSN",
+      year: "2025",
+      file: "/certificates/acad-csirt-summit-2025.pdf",
+      thumb: "/certificates/thumbs/acad-csirt-summit-2025.jpg",
+      type: "pdf",
     },
   ],
   languages: [

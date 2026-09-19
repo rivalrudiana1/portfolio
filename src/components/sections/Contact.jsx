@@ -1,20 +1,30 @@
-import { useState } from 'react';
-import { personalInfo } from '../../data/portfolioData';
+import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import Reveal from '../ui/Reveal';
+import GlowButton from '../ui/GlowButton';
+import { normalizeTel } from '../../data/projectUtils';
 
 const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_FORM_ID;
 
 const Contact = () => {
+  const { data, t } = useLanguage();
   const [copied, setCopied] = useState(false);
+  const copyTimer = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState({ type: 'idle', text: '' });
+  // status.key (bukan text) agar otomatis ikut bahasa aktif via t(key) saat render
+  const [status, setStatus] = useState({ type: 'idle', key: '' });
+
+  useEffect(() => () => {
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+  }, []);
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText(personalInfo.contact.email);
+      await navigator.clipboard.writeText(data.contact.email);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -22,13 +32,13 @@ const Contact = () => {
 
   const validate = (values) => {
     const next = {};
-    if (!values.name.trim()) next.name = 'Nama wajib diisi.';
-    if (!values.email.trim()) next.email = 'Email wajib diisi.';
+    if (!values.name.trim()) next.name = t('contact.errName');
+    if (!values.email.trim()) next.email = t('contact.errEmail');
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim()))
-      next.email = 'Format email tidak valid.';
-    if (!values.message.trim()) next.message = 'Pesan wajib diisi.';
+      next.email = t('contact.errEmailInvalid');
+    if (!values.message.trim()) next.message = t('contact.errMsg');
     else if (values.message.trim().length < 10)
-      next.message = 'Pesan minimal 10 karakter.';
+      next.message = t('contact.errMsgShort');
     return next;
   };
 
@@ -44,7 +54,7 @@ const Contact = () => {
     setErrors(validation);
     if (Object.keys(validation).length > 0) return;
 
-    setStatus({ type: 'sending', text: 'Mengirim...' });
+    setStatus({ type: 'sending', key: 'contact.sending' });
 
     // Jika ada Formspree ID, kirim via API. Jika tidak, fallback ke mailto.
     if (FORMSPREE_ID) {
@@ -53,72 +63,74 @@ const Contact = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
-            name: form.name.trim(),
-            email: form.email.trim(),
-            message: form.message.trim(),
+            name: form.name.trim().slice(0, 100),
+            email: form.email.trim().slice(0, 254),
+            message: form.message.trim().slice(0, 5000),
           }),
         });
         if (!res.ok) throw new Error('gagal');
-        setStatus({ type: 'success', text: 'Pesan terkirim. Terima kasih, saya akan segera membalas!' });
+        setStatus({ type: 'success', key: 'contact.success' });
         setForm({ name: '', email: '', message: '' });
       } catch {
-        setStatus({ type: 'error', text: 'Gagal mengirim via form. Silakan pakai tombol email langsung.' });
+        setStatus({ type: 'error', key: 'contact.error' });
       }
       return;
     }
 
-    const subject = encodeURIComponent(`Portfolio inquiry dari ${form.name.trim()}`);
-    const body = encodeURIComponent(`${form.message.trim()}\n\n— ${form.name.trim()} (${form.email.trim()})`);
-    window.location.href = `mailto:${personalInfo.contact.email}?subject=${subject}&body=${body}`;
-    setStatus({ type: 'success', text: 'Membuka aplikasi email kamu. Tinggal tekan kirim!' });
+    const subject = encodeURIComponent(`Portfolio inquiry dari ${form.name.trim().slice(0, 100)}`);
+    const body = encodeURIComponent(`${form.message.trim().slice(0, 2000)}\n\n— ${form.name.trim().slice(0, 100)} (${form.email.trim()})`);
+    window.location.href = `mailto:${data.contact.email}?subject=${subject}&body=${body}`;
+    setStatus({ type: 'success', key: 'contact.successMailto' });
   };
 
   const inputClass = (hasError) =>
-    `w-full px-4 py-3 rounded-xl border bg-white text-ulbi-blue placeholder:text-ulbi-blue/40 focus:outline-2 focus:outline-offset-1 focus:outline-ulbi-orange transition-colors ${
-      hasError ? 'border-red-400' : 'border-ulbi-silver focus:border-ulbi-orange'
+    `w-full px-4 py-3 rounded-xl border bg-white text-ulbi-blue placeholder:text-ulbi-blue/40 focus:outline-2 focus:outline-offset-1 focus:outline-ulbi-orange transition-colors dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:border-white/15 ${
+      hasError ? 'border-red-400 dark:border-red-400' : 'border-ulbi-silver focus:border-ulbi-orange dark:focus:border-ulbi-orange'
     }`;
 
   return (
-    <section id="contact" className="py-24 md:py-32 relative overflow-hidden bg-white scroll-mt-20">
+    <section id="contact" className="py-20 sm:py-24 md:py-32 relative overflow-hidden bg-white/70 backdrop-blur-[2px] scroll-mt-20 dark:bg-zinc-950/70">
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-ulbi-orange/5 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[600px] h-[400px] bg-ulbi-orange/5 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
 
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
         <Reveal>
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-ulbi-blue mb-6 tracking-tight">Mari Berkolaborasi!</h2>
-            <p className="text-lg text-ulbi-blue/70 leading-relaxed font-light">
-              Tertarik untuk bekerja sama, diskusi tentang arsitektur data, atau sekadar menyapa?
-              Isi form di bawah — langsung masuk ke email saya.
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-ulbi-orange mb-3">{t('contact.eyebrow')}</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ulbi-blue mb-6 tracking-tight dark:text-white">{t('contact.title')}</h2>
+            <p className="text-base sm:text-lg text-ulbi-blue/70 leading-relaxed font-light dark:text-zinc-400">
+              {t('contact.desc')}
             </p>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
           {/* Info panel */}
           <Reveal className="lg:col-span-2">
-            <div className="p-6 md:p-8 rounded-2xl bg-ulbi-blue text-white">
-              <h3 className="text-xl font-bold mb-2">Info Kontak</h3>
-              <p className="text-white/70 text-sm mb-6">Respon tercepat via email. Juga aktif di GitHub & LinkedIn.</p>
-              <div className="space-y-3 text-sm">
+            <div className="p-5 sm:p-6 md:p-8 rounded-2xl bg-ulbi-blue text-white relative overflow-hidden dark:bg-zinc-900 dark:border dark:border-white/10">
+              <div className="absolute -top-16 -right-16 w-48 h-48 bg-ulbi-orange/20 rounded-full blur-[60px] pointer-events-none" aria-hidden="true"></div>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 relative">{t('contact.infoTitle')}</h3>
+              <p className="text-white/70 text-sm mb-6 relative dark:text-zinc-400">{t('contact.infoDesc')}</p>
+              <div className="space-y-3 text-sm relative">
                 <button
                   type="button"
                   onClick={copyEmail}
-                  title="Klik untuk salin"
+                  title={t('contact.copyTitle')}
+                  aria-label={`${t('contact.emailLabel')}: ${data.contact.email}`}
                   className="w-full text-left px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition-colors break-all"
                 >
-                  <span className="block text-xs uppercase tracking-widest text-white/50 mb-1">Email {copied ? '— tersalin ✓' : '(klik untuk salin)'}</span>
-                  <span className="font-medium">{personalInfo.contact.email}</span>
+                  <span className="block text-xs uppercase tracking-widest text-white/50 mb-1">{t('contact.emailLabel')} {copied ? `— ${t('contact.copied')}` : ''}</span>
+                  <span className="font-medium">{data.contact.email}</span>
                 </button>
-                <a href={`tel:${personalInfo.contact.phone.replace(/\s/g, '')}`} className="block px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition-colors">
-                  <span className="block text-xs uppercase tracking-widest text-white/50 mb-1">Telepon</span>
-                  <span className="font-medium">{personalInfo.contact.phone}</span>
+                <a href={`tel:${normalizeTel(data.contact.phone)}`} className="block px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition-colors">
+                  <span className="block text-xs uppercase tracking-widest text-white/50 mb-1">{t('contact.phoneLabel')}</span>
+                  <span className="font-medium">{data.contact.phone}</span>
                 </a>
-                <div className="flex gap-3 pt-2">
-                  <a href={personalInfo.contact.github} target="_blank" rel="noreferrer" className="flex-1 text-center px-4 py-2.5 rounded-xl bg-ulbi-orange hover:bg-[#c94520] font-semibold transition-colors">
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <a href={data.contact.github} target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 rounded-xl bg-ulbi-orange hover:bg-[#c94520] font-semibold transition-colors">
                     GitHub
                   </a>
-                  <a href={personalInfo.contact.linkedin} target="_blank" rel="noreferrer" className="flex-1 text-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-semibold transition-colors">
+                  <a href={data.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-semibold transition-colors">
                     LinkedIn
                   </a>
                 </div>
@@ -128,16 +140,17 @@ const Contact = () => {
 
           {/* Form */}
           <Reveal delay={120} className="lg:col-span-3">
-            <form onSubmit={handleSubmit} noValidate className="p-6 md:p-8 rounded-2xl bg-ulbi-grey/30 border border-ulbi-silver">
+            <form onSubmit={handleSubmit} noValidate className="p-5 sm:p-6 md:p-8 rounded-2xl bg-ulbi-grey/30 border border-ulbi-silver dark:bg-zinc-900/60 dark:border-white/10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="contact-name" className="block text-sm font-semibold text-ulbi-blue mb-2">Nama</label>
+                  <label htmlFor="contact-name" className="block text-sm font-semibold text-ulbi-blue mb-2 dark:text-zinc-200">{t('contact.name')}</label>
                   <input
                     id="contact-name"
                     name="name"
                     type="text"
                     autoComplete="name"
-                    placeholder="Nama kamu"
+                    maxLength={100}
+                    placeholder={t('contact.namePh')}
                     value={form.name}
                     onChange={handleChange}
                     aria-invalid={!!errors.name}
@@ -147,13 +160,14 @@ const Contact = () => {
                   {errors.name && <p id="contact-name-error" className="mt-2 text-sm text-red-500">{errors.name}</p>}
                 </div>
                 <div>
-                  <label htmlFor="contact-email" className="block text-sm font-semibold text-ulbi-blue mb-2">Email</label>
+                  <label htmlFor="contact-email" className="block text-sm font-semibold text-ulbi-blue mb-2 dark:text-zinc-200">Email</label>
                   <input
                     id="contact-email"
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="nama@email.com"
+                    maxLength={254}
+                    placeholder={t('contact.emailPh')}
                     value={form.email}
                     onChange={handleChange}
                     aria-invalid={!!errors.email}
@@ -165,12 +179,13 @@ const Contact = () => {
               </div>
 
               <div className="mt-5">
-                <label htmlFor="contact-message" className="block text-sm font-semibold text-ulbi-blue mb-2">Pesan</label>
+                <label htmlFor="contact-message" className="block text-sm font-semibold text-ulbi-blue mb-2 dark:text-zinc-200">{t('contact.msg')}</label>
                 <textarea
                   id="contact-message"
                   name="message"
                   rows={5}
-                  placeholder="Ceritakan kebutuhan / peluang / pertanyaan kamu..."
+                  maxLength={5000}
+                  placeholder={t('contact.msgPh')}
                   value={form.message}
                   onChange={handleChange}
                   aria-invalid={!!errors.message}
@@ -180,28 +195,29 @@ const Contact = () => {
                 {errors.message && <p id="contact-message-error" className="mt-2 text-sm text-red-500">{errors.message}</p>}
               </div>
 
-              {status.type !== 'idle' && (
+              {status.type !== 'idle' && status.key && (
                 <p
                   role="status"
                   className={`mt-5 text-sm font-medium px-4 py-3 rounded-xl ${
                     status.type === 'success'
-                      ? 'bg-green-50 text-green-700 border border-green-200'
+                      ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-950/50 dark:text-green-300 dark:border-green-900'
                       : status.type === 'error'
-                        ? 'bg-red-50 text-red-600 border border-red-200'
-                        : 'bg-ulbi-blue/5 text-ulbi-blue/70 border border-ulbi-silver'
+                        ? 'bg-red-50 text-red-600 border border-red-200 dark:bg-red-950/50 dark:text-red-300 dark:border-red-900'
+                        : 'bg-ulbi-blue/5 text-ulbi-blue/70 border border-ulbi-silver dark:bg-white/5 dark:text-zinc-300 dark:border-white/10'
                   }`}
                 >
-                  {status.text}
+                  {t(status.key)}
                 </p>
               )}
 
-              <button
+              <GlowButton
                 type="submit"
+                variant="primary"
                 disabled={status.type === 'sending'}
-                className="mt-6 w-full sm:w-auto px-8 py-4 rounded-full bg-ulbi-orange text-white font-semibold hover:bg-[#c94520] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-ulbi-orange/20"
+                className="mt-6"
               >
-                {status.type === 'sending' ? 'Mengirim...' : 'Kirim Pesan'}
-              </button>
+                {status.type === 'sending' ? t('contact.sending') : t('contact.submit')}
+              </GlowButton>
             </form>
           </Reveal>
         </div>
