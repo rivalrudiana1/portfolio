@@ -102,16 +102,16 @@ export const personalInfo = {
     },
     {
       slug: "cukimai-ai-konsultasi",
-      title: "CUKIMAI — Konsultasi Mahasiswa dengan AI",
+      title: "Mahasense — Consultation and Understanding of Campus Issues",
       tech: ["Python", "Streamlit", "scikit-learn", "Groq"],
       image: "/images/projects/cukimai.svg",
-      desc: "Aplikasi konsultasi mahasiswa bertenaga AI: klasifikasi keluhan ke kategori utama, pendukung, dan tingkat, lalu LLM menyusun solusi + to-do list.",
+      desc: "Aplikasi konsultasi mahasiswa bertenaga AI (NLP + LLM): klasifikasi keluhan ke kategori utama, pendukung, dan tingkat, lalu Groq LLM menyusun solusi + to-do list.",
       fullDesc:
-        "Aplikasi Streamlit bernama CUKIMAI (repo: Mahasense). Pengguna menuliskan permasalahannya dalam teks bebas; tiga model klasifikasi terlatih (vectorizer TF-IDF + label encoder) memetakan keluhan ke kategori utama, kategori pendukung, dan tingkat permasalahan, kemudian Groq LLM menyusun solusi personal dan daftar tindakan.",
+        "Mahasense — Consultation and Understanding of Campus Issues with Machine Learning and Artificial Intelligence. Pengguna menuliskan permasalahannya dalam teks bebas; pipeline NLP (TF-IDF Vectorizer + Logistic Regression multi-output, dilatih via train_model.py / auto_train.py dari dataset.csv) memetakan keluhan ke kategori utama, kategori pendukung, dan tingkat keparahan, kemudian Groq API (groq_client.py) menyusun solusi personal dan daftar tindakan.",
       challenge:
         "Keluhan mahasiswa tidak terstruktur dan sulit dikategorikan manual agar mendapat saran yang relevan.",
       solution:
-        "Melatih pipeline klasifikasi (auto_train.py + dataset.csv) dengan tiga head prediksi dan mengorkestrasikannya dengan prompt LLM yang menerima hasil klasifikasi sebagai konteks.",
+        "Melatih pipeline klasifikasi (TF-IDF + Logistic Regression tiga head prediksi, tersimpan sebagai model_*.pkl / vectorizer.pkl / encoder_*.pkl) dan mengorkestrasikannya dengan prompt Groq LLM yang menerima hasil klasifikasi sebagai konteks.",
       impact:
         "Mengubah curhatan bebas menjadi analisis terstruktur plus rencana aksi konkret dalam sekali klik.",
       githubUrl: "https://github.com/rivalrudiana1/Mahasense",
@@ -186,6 +186,23 @@ export const personalInfo = {
       impact:
         "Lulus UTS dengan aplikasi yang mendemonstrasikan fundamental Flutter secara lengkap; screenshot tersedia di repo.",
       githubUrl: "https://github.com/rivalrudiana1/ATS-MP",
+      liveUrl: null,
+    },
+    {
+      slug: "tugas-1-mp-crud-ui",
+      title: "Tugas 1 Mobile Programming — CRUD UI Flutter",
+      tech: ["Flutter", "Dart", "Material Design"],
+      image: "/images/projects/tugas-1-mp.svg",
+      desc: "Prototipe aplikasi mobile Flutter: navigasi multi-halaman (Login, Home, Dashboard, Add, Update) untuk mendemonstrasikan alur CRUD UI.",
+      fullDesc:
+        "Proyek Tugas 1 mata kuliah Mobile Programming (D3 TI ULBI). Aplikasi prototipe berbasis Flutter (SDK ^3.7.2) dengan routing terstruktur: LoginPage (/), HomePage (/home), DashboardPage (/dashboard), AddPage (/add), dan UpdatePage (/update) untuk alur Tambah dan Perbarui data.",
+      challenge:
+        "Mendemonstrasikan navigasi dasar, tata letak UI, dan alur logika manajemen data (Tambah/Perbarui) dalam satu prototipe yang rapi.",
+      solution:
+        "Menggunakan MaterialApp routes terstruktur dengan halaman terpisah per alur (login, home, dashboard, add, update) plus Cupertino Icons untuk UI yang konsisten.",
+      impact:
+        "Memenuhi tugas Mobile Programming dengan fondasi CRUD UI yang siap dikembangkan ke integrasi database/API.",
+      githubUrl: "https://github.com/rivalrudiana1/Tugas-1-MP",
       liveUrl: null,
     },
   ],

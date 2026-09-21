@@ -105,16 +105,16 @@ export const personalInfoEn = {
     },
     {
       slug: "cukimai-ai-konsultasi",
-      title: "CUKIMAI — AI Student Counseling",
+      title: "Mahasense — Consultation and Understanding of Campus Issues",
       tech: ["Python", "Streamlit", "scikit-learn", "Groq"],
       image: "/images/projects/cukimai.svg",
-      desc: "AI-powered student counseling app: classifies concerns into main, supporting, and severity categories, then an LLM drafts solutions + to-do list.",
+      desc: "AI student counseling app (NLP + LLM): classifies concerns into main, supporting, and severity categories, then Groq LLM drafts solutions + to-do list.",
       fullDesc:
-        "Streamlit app named CUKIMAI (repo: Mahasense). Users write their problem in free text; three trained classifiers (TF-IDF vectorizer + label encoders) map it to a main category, supporting category, and severity level, then a Groq LLM composes a personalized solution and action list.",
+        "Mahasense — Consultation and Understanding of Campus Issues with Machine Learning and Artificial Intelligence. Users write their problem in free text; an NLP pipeline (TF-IDF Vectorizer + multi-output Logistic Regression, trained via train_model.py / auto_train.py on dataset.csv) maps it to a main category, supporting category, and severity level, then the Groq API (groq_client.py) composes a personalized solution and action list.",
       challenge:
         "Unstructured student complaints are hard to categorize manually for relevant advice.",
       solution:
-        "Trained a classification pipeline (auto_train.py + dataset.csv) with three prediction heads, orchestrated with an LLM prompt that receives the classification as context.",
+        "Trained a classification pipeline (TF-IDF + three-head Logistic Regression, stored as model_*.pkl / vectorizer.pkl / encoder_*.pkl), orchestrated with a Groq LLM prompt that receives the classification as context.",
       impact:
         "Turns free-form venting into structured analysis plus a concrete action plan in one click.",
       githubUrl: "https://github.com/rivalrudiana1/Mahasense",
@@ -189,6 +189,23 @@ export const personalInfoEn = {
       impact:
         "Passed the midterm with an app demonstrating complete Flutter fundamentals; screenshots available in the repo.",
       githubUrl: "https://github.com/rivalrudiana1/ATS-MP",
+      liveUrl: null,
+    },
+    {
+      slug: "tugas-1-mp-crud-ui",
+      title: "Mobile Programming Task 1 — Flutter CRUD UI",
+      tech: ["Flutter", "Dart", "Material Design"],
+      image: "/images/projects/tugas-1-mp.svg",
+      desc: "Flutter mobile prototype: multi-page navigation (Login, Home, Dashboard, Add, Update) demonstrating a CRUD UI flow.",
+      fullDesc:
+        "Task 1 project for the Mobile Programming course (D3 Informatics, ULBI). Prototype app built with Flutter (SDK ^3.7.2) using structured routing: LoginPage (/), HomePage (/home), DashboardPage (/dashboard), AddPage (/add), and UpdatePage (/update) for Add and Update data flows.",
+      challenge:
+        "Demonstrating basic navigation, UI layout, and data-management logic (Add/Update) in one clean prototype.",
+      solution:
+        "Used structured MaterialApp routes with a dedicated page per flow (login, home, dashboard, add, update) plus Cupertino Icons for a consistent UI.",
+      impact:
+        "Fulfilled the Mobile Programming assignment with a CRUD UI foundation ready for database/API integration.",
+      githubUrl: "https://github.com/rivalrudiana1/Tugas-1-MP",
       liveUrl: null,
     },
   ],
